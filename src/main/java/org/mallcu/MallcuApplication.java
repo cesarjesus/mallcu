@@ -4,6 +4,8 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.mallcu.resources.StudentResource;
+
 public class MallcuApplication extends Application<MallcuConfiguration> {
 
     public static void main(final String[] args) throws Exception {
@@ -23,7 +25,8 @@ public class MallcuApplication extends Application<MallcuConfiguration> {
     @Override
     public void run(final MallcuConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        StudentResource studentResource = new StudentResource();
+        environment.jersey().register(studentResource);
     }
 
 }
