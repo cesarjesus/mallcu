@@ -1,5 +1,9 @@
 package org.mallcu.api;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Class.
  * 
@@ -9,9 +13,13 @@ public class Class {
     
     private String code;
 
+    @JsonProperty
     private String title;
 
+    @JsonProperty
     private String description;
+
+    private List<Student> students;
 
     /**
      * Get the value of description
@@ -54,6 +62,7 @@ public class Class {
      *
      * @return the value of code
      */
+    @JsonProperty
     public String getCode() {
         return code;
     }
@@ -67,4 +76,22 @@ public class Class {
         this.code = code;
     }
 
+     /**
+     * Get the value of students
+     *
+     * @return the value of students
+     */
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    /**
+     * Add a new student to the Class.
+     * 
+     * @param student to be added.
+     */
+    public void addStudent(Student student) {
+        // TODO: Initialize students in some place first.
+        students.add(student);
+    }
 }
