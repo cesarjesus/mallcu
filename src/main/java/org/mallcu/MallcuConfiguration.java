@@ -1,4 +1,4 @@
-package mallcu.org;
+package org.mallcu;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;

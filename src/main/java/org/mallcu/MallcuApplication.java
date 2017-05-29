@@ -1,4 +1,4 @@
-package mallcu.org;
+package org.mallcu;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
