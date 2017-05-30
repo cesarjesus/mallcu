@@ -44,4 +44,10 @@ public class ClassManager {
         // before try to remove it.
         return classes.remove(searchByCode(code));
     }
+    
+    public boolean addStudent(String classCode, int studentId) {
+        // TODO: It should be changed according searchByCode changes.
+        Class clasz = searchByCode(classCode);
+        return true;
+    }
 }
