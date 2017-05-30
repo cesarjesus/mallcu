@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.mallcu.api.Class;
+import org.mallcu.core.ApplicationManager;
 import org.mallcu.core.ClassManager;
 
 /**
@@ -27,7 +28,7 @@ public class ClassResource {
     private ClassManager classManager;
 
     public ClassResource() {
-        classManager = new ClassManager();
+        classManager = ApplicationManager.getInstance().getClassManager();
     }
 
     @GET
@@ -58,6 +59,7 @@ public class ClassResource {
         return Response.ok().build();
     }
 
+    @POST
     @Path("{code}/addStudent/{id}")
     public Response addStudent(@PathParam("code") String classCode,
             @PathParam("id") int studentId) {

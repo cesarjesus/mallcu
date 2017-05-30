@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.mallcu.api.Student;
+import org.mallcu.core.ApplicationManager;
 import org.mallcu.core.StudentsManager;
 
 /**
@@ -27,7 +28,7 @@ public class StudentResource {
     private StudentsManager studentsManager;
     
     public StudentResource() {
-        studentsManager = new StudentsManager();
+        studentsManager = ApplicationManager.getInstance().getStudentsManager();
     }
     
     @GET

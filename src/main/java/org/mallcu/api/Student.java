@@ -1,8 +1,10 @@
 package org.mallcu.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Represents a Student.
@@ -19,8 +21,12 @@ public class Student {
     @JsonProperty
     private String lastName;
 
+    @JsonSerialize(using = ListClassSerializer.class)
     private List<Class> classes;
 
+    public Student() {
+        classes = new ArrayList<>();
+    }
     /**
      * Get the value of lastName
      *

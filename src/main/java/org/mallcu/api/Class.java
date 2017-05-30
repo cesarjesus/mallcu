@@ -1,8 +1,10 @@
 package org.mallcu.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Represents a Class.
@@ -19,7 +21,12 @@ public class Class {
     @JsonProperty
     private String description;
 
+    @JsonSerialize(using = ListStudentsSerializer.class)
     private List<Student> students;
+    
+    public Class() {
+        students = new ArrayList<>();
+    }
 
     /**
      * Get the value of description

@@ -8,7 +8,7 @@ import org.mallcu.api.Class;
 /**
  * Logic to handle Class.
  * 
- * @author cesar_flores
+ * @author Cesar Flores
  */
 public class ClassManager {
     // TODO: It can be retrieve from DB or wherever.
@@ -48,6 +48,10 @@ public class ClassManager {
     public boolean addStudent(String classCode, int studentId) {
         // TODO: It should be changed according searchByCode changes.
         Class clasz = searchByCode(classCode);
+        // TODO: This cannot be a good way todo this.
+        // TODO: Verify if the operation is success and then return true.
+        clasz.addStudent(ApplicationManager.getInstance()
+                .getStudentsManager().searchById(studentId));
         return true;
     }
 }
