@@ -4,6 +4,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.mallcu.resources.ClassResource;
 import org.mallcu.resources.StudentResource;
 
 public class MallcuApplication extends Application<MallcuConfiguration> {
@@ -27,6 +28,9 @@ public class MallcuApplication extends Application<MallcuConfiguration> {
                     final Environment environment) {
         StudentResource studentResource = new StudentResource();
         environment.jersey().register(studentResource);
+        
+        ClassResource classResource = new ClassResource();
+        environment.jersey().register(classResource);
     }
 
 }
