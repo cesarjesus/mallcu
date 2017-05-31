@@ -48,10 +48,37 @@ public class ClassManager {
     public boolean addStudent(String classCode, int studentId) {
         // TODO: It should be changed according searchByCode changes.
         Class clasz = searchByCode(classCode);
+        StudentsManager studentManager = ApplicationManager
+                .getInstance().getStudentsManager();
         // TODO: This cannot be a good way todo this.
         // TODO: Verify if the operation is success and then return true.
-        clasz.addStudent(ApplicationManager.getInstance()
+        clasz.addStudent(studentManager.searchById(studentId));
+        studentManager.searchById(studentId).addClass(clasz);
+        return true;
+    }
+    
+    public boolean removeStudent(String classCode, int studentId) {
+        Class clasz = searchByCode(classCode);
+        clasz.removeStudent(ApplicationManager.getInstance()
                 .getStudentsManager().searchById(studentId));
         return true;
+    }
+    
+    public List<Integer> getStudents(String classCode) {
+        List<Integer> students = new ArrayList<>();
+        Class clasz = searchByCode(classCode);
+        clasz.getStudents().forEach((student) -> {
+            students.add(student.getId());
+        });
+        
+        return students;
+    }
+    
+    public Class update(String classCode, Class clasz) {
+        Class saved = searchByCode(classCode);
+        // TODO: Again, ineficient way todo this.
+        saved.setTitle(clasz.getTitle());
+        saved.setDescription(clasz.getDescription());
+        return saved;
     }
 }

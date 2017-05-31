@@ -101,4 +101,13 @@ public class Class {
         // TODO: Initialize students in some place first.
         students.add(student);
     }
+    
+    /**
+     * Removes a student from the class.
+     * 
+     * @param student to be removed.
+     */
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 }

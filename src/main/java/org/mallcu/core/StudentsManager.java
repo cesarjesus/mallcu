@@ -45,4 +45,37 @@ public class StudentsManager {
         // before try to remove it.
         return students.remove(searchById(id));
     }
+    
+    public List<String> getClasses(int id) {
+        Student student = searchById(id);
+        List<String> classes = new ArrayList<>();
+        student.getClasses().stream().forEach(s -> classes.add(s.getCode()));
+        return classes;
+    }
+    
+    public boolean addClass(int id, String classCode) {
+        Student student = searchById(id);
+        ClassManager classManager = ApplicationManager
+                .getInstance().getClassManager();
+        student.addClass(classManager.searchByCode(classCode));
+        classManager.searchByCode(classCode).addStudent(student);
+        // TODO: Verify and validate that it was added correctly
+        return true;
+    }
+    
+    public boolean removeClass(int id, String classCode) {
+        Student student = searchById(id);
+        student.removeClass(ApplicationManager.getInstance()
+                .getClassManager().searchByCode(classCode));
+        return true;
+    }
+    
+    public Student update(int id, Student student) {
+        Student saved = searchById(id);
+        // TODO: This is ineficient, have to be a better way to do this.
+        saved.setFirstName(student.getFirstName());
+        saved.setLastName(student.getLastName());
+        
+        return saved;
+    }
 }

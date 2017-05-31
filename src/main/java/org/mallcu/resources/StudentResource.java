@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -57,5 +58,36 @@ public class StudentResource {
         // TODO: Verify if the student was deleted correctly
         // and then return a OK response.
         return Response.ok().build();
+    }
+    
+    @GET
+    @Path("{id}/class")
+    public List<String> getClasses(@PathParam("id") int id) {
+        return studentsManager.getClasses(id);
+    }
+    
+    @POST
+    @Path("{id}/class/{code}")
+    public Response addClass(@PathParam("id") int id,
+            @PathParam("code") String classCode) {
+        studentsManager.addClass(id, classCode);
+        // TODO: Verify if the class was added correctly
+        // and then return OK response.
+        return Response.ok().build();
+    }
+    
+    @DELETE
+    @Path("{id}/class/{code}")
+    public Response removeClass(@PathParam("id") int id,
+            @PathParam("code") String classCode) {
+        studentsManager.removeClass(id, classCode);
+        // TODO: Verify that remove was success and then return OK.
+        return Response.ok().build();
+    }
+    
+    @PUT
+    @Path("{id}")
+    public Student update(@PathParam("id")int id, Student student) {
+        return studentsManager.update(id, student);
     }
 }

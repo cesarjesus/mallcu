@@ -102,4 +102,8 @@ public class Student {
         // TODO: Initialize classes in some place first.
         classes.add(clazz);
     }
+    
+    public void removeClass(Class clasz) {
+        classes.remove(clasz);
+    }
 }
