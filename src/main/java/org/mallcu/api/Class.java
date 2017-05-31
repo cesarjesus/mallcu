@@ -3,6 +3,7 @@ package org.mallcu.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -21,6 +22,12 @@ public class Class {
     @JsonProperty
     private String description;
 
+    @JsonIgnore
+    private double latitude;
+    
+    @JsonIgnore
+    private double longitude;
+    
     @JsonSerialize(using = ListStudentsSerializer.class)
     private List<Student> students;
     
@@ -109,5 +116,21 @@ public class Class {
      */
     public void removeStudent(Student student) {
         students.remove(student);
+    }
+    
+    public double getLatitude() {
+        return latitude;
+    }
+    
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+    
+    public double getLongitude() {
+        return longitude;
+    }
+    
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
