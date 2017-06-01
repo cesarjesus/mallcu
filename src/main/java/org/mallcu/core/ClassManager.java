@@ -36,6 +36,13 @@ public class ClassManager {
     }
     
     public boolean add(Class clasz) {
+        boolean codeAlreadyExists = classes.stream()
+                .filter(cl -> cl.getCode().equals(clasz.getCode()))
+                .findFirst().isPresent();
+        if (codeAlreadyExists) {
+            return false;
+        }
+
         return classes.add(clasz);
     }
     

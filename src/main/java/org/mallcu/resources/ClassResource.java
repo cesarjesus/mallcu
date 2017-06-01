@@ -1,6 +1,7 @@
 package org.mallcu.resources;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -39,16 +40,31 @@ public class ClassResource {
 
     @GET
     @Path("{code}")
-    public Class classByCode(@PathParam("code") String code) {
-        return classManager.searchByCode(code);
+    public Response classByCode(@PathParam("code") String code) {
+        Response response;
+        try {
+            Class clasz = classManager.searchByCode(code);
+            response = Response.ok(clasz).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+        return response;
     }
 
     @POST
     public Response add(Class clasz) {
         // TODO: Verify if the student was added correctly
         // and then return a OK response.
-        classManager.add(clasz);
-        return Response.ok().build();
+        Response response;
+        boolean added = classManager.add(clasz);
+        if (added) {
+            response = Response.ok().status(Response.Status.CREATED).build();
+        } else {
+            response = Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        
+        return response;
     }
 
     @DELETE
