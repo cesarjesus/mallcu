@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author Cesar Flores
  */
 public class Student {
-    
+
     private Integer id;
     
     @JsonProperty

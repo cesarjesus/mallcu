@@ -43,8 +43,50 @@ public class ClassResource {
     public Response classByCode(@PathParam("code") String code) {
         Response response;
         try {
-            Class clasz = classManager.searchByCode(code);
-            response = Response.ok(clasz).build();
+            response = Response.ok(classManager.searchByCode(code)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
+    }
+
+    @POST
+    public Response add(Class clasz) {
+        Response response = Response.ok().status(Response.Status.CREATED).build();
+        if (!classManager.add(clasz)) {
+            response = Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return response;
+    }
+
+    @DELETE
+    @Path("{code}")
+    public Response delete(@PathParam("code") String code) {
+        Response response;
+        try {
+            boolean deleted = classManager.delete(code);
+            if (deleted) {
+                response = Response.ok().build();
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
+    }
+
+    @POST
+    @Path("{code}/students/{id}")
+    public Response addStudent(@PathParam("code") String classCode,
+            @PathParam("id") int studentId) {
+        Response response;
+        try {
+            classManager.addStudent(classCode, studentId);
+            response = Response.ok().build();
         } catch (NoSuchElementException ex) {
             response = Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -52,55 +94,44 @@ public class ClassResource {
         return response;
     }
 
-    @POST
-    public Response add(Class clasz) {
-        // TODO: Verify if the student was added correctly
-        // and then return a OK response.
+    @DELETE
+    @Path("{code}/students/{id}")
+    public Response removeStudent(@PathParam("code") String classCode,
+            @PathParam("id") int studentId) {
         Response response;
-        boolean added = classManager.add(clasz);
-        if (added) {
-            response = Response.ok().status(Response.Status.CREATED).build();
-        } else {
-            response = Response.status(Response.Status.BAD_REQUEST).build();
+        try {
+            classManager.removeStudent(classCode, studentId);
+            response = Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
         }
         
         return response;
     }
 
-    @DELETE
-    @Path("{code}")
-    public Response delete(@PathParam("code") String code) {
-        classManager.delete(code);
-        // TODO: Verify if the student was deleted correctly
-        // and then return a OK response.
-        return Response.ok().build();
-    }
-
-    @POST
-    @Path("{code}/students/{id}")
-    public Response addStudent(@PathParam("code") String classCode,
-            @PathParam("id") int studentId) {
-        classManager.addStudent(classCode, studentId);
-        return Response.ok().build();
-    }
-    
-    @DELETE
-    @Path("{code}/students/{id}")
-    public Response removeStudent(@PathParam("code") String classCode,
-            @PathParam("id") int studentId) {
-        classManager.removeStudent(classCode, studentId);
-        return Response.ok().build();
-    }
-    
     @GET
     @Path("{code}/students")
-    public List<Integer> getStudents(@PathParam("code") String classCode) {
-        return classManager.getStudents(classCode);
+    public Response getStudents(@PathParam("code") String classCode) {
+        Response response;
+        try {
+            response = Response.ok(classManager.getStudents(classCode)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+        return response;
     }
-    
+
     @PUT
     @Path("{code}")
-    public Class update(@PathParam("code") String classCode, Class clasz) {
-        return classManager.update(classCode, clasz);
+    public Response update(@PathParam("code") String classCode, Class clasz) {
+        Response response;
+        try {
+            response = Response.ok(classManager.update(classCode, clasz)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+        return response;
     }
 }

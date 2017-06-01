@@ -1,6 +1,7 @@
 package org.mallcu.resources;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -39,55 +40,94 @@ public class StudentResource {
     
     @GET
     @Path("{id}")
-    public Student studentById(@PathParam("id") int id) {
-        return studentsManager.searchById(id);
+    public Response studentById(@PathParam("id") int id) {
+        Response response;
+        try {
+            response = Response.ok(studentsManager.searchById(id)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+        return response;
     }
     
     @POST
     public Response add(Student student) {
-        // TODO: Verify if the student was added correctly
-        // and then return a OK response.
-        studentsManager.add(student);
-        return Response.ok().build();
+        Response response = Response.status(Response.Status.CREATED).build();
+        if (!studentsManager.add(student)) {
+            response = Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return response;
     }
     
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
-        studentsManager.delete(id);
-        // TODO: Verify if the student was deleted correctly
-        // and then return a OK response.
-        return Response.ok().build();
+        Response response;
+        try {
+            studentsManager.delete(id);
+            response = Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
     }
     
     @GET
     @Path("{id}/class")
-    public List<String> getClasses(@PathParam("id") int id) {
-        return studentsManager.getClasses(id);
+    public Response getClasses(@PathParam("id") int id) {
+        Response response;
+        try {
+            response = Response.ok(studentsManager.getClasses(id)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
     }
     
     @POST
     @Path("{id}/class/{code}")
     public Response addClass(@PathParam("id") int id,
             @PathParam("code") String classCode) {
-        studentsManager.addClass(id, classCode);
-        // TODO: Verify if the class was added correctly
-        // and then return OK response.
-        return Response.ok().build();
+        Response response;
+        try {
+            studentsManager.addClass(id, classCode);
+            response = Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
     }
     
     @DELETE
     @Path("{id}/class/{code}")
     public Response removeClass(@PathParam("id") int id,
             @PathParam("code") String classCode) {
-        studentsManager.removeClass(id, classCode);
-        // TODO: Verify that remove was success and then return OK.
-        return Response.ok().build();
+        Response response;
+        try {
+            studentsManager.removeClass(id, classCode);
+            response = Response.ok().build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
     }
     
     @PUT
     @Path("{id}")
-    public Student update(@PathParam("id")int id, Student student) {
-        return studentsManager.update(id, student);
+    public Response update(@PathParam("id")int id, Student student) {
+        Response response;
+        try {
+            response = Response.ok(studentsManager.update(id, student)).build();
+        } catch (NoSuchElementException ex) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return response;
     }
 }

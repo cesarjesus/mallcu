@@ -37,6 +37,12 @@ public class StudentsManager {
     }
     
     public boolean add(Student student) {
+        boolean idAlreadyExists = students.stream()
+                .anyMatch(s -> s.getId().equals(student.getId()));
+        if (idAlreadyExists) {
+            return false;
+        }
+
         return students.add(student);
     }
     
@@ -57,6 +63,13 @@ public class StudentsManager {
         Student student = searchById(id);
         ClassManager classManager = ApplicationManager
                 .getInstance().getClassManager();
+        
+        if (student.getClasses().stream()
+                .anyMatch(c -> c.getCode().equals(classCode))) {
+            // NOTE: Student is already in the class, do nothing.
+            return true;
+        }
+
         student.addClass(classManager.searchByCode(classCode));
         classManager.searchByCode(classCode).addStudent(student);
         // TODO: Verify and validate that it was added correctly
