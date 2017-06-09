@@ -26,7 +26,7 @@ public class GeoUtilsTest {
     }
 
     @Test
-    @Ignore
+    //@Ignore
     public void studentInClassRoomTest() {
         Student student = new Student();
         student.setFirstName("John");
